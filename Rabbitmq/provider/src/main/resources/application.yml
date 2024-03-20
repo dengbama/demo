@@ -1,0 +1,13 @@
+server:
+  port: 8453
+#dubbo:
+#  application:
+#    name: dubbo-consumer
+##  registry:
+##    address: zookeeper://127.0.0.1:2181
+#  protocol:
+#    name: dubbo
+#    port: 21321
+#  consumer:
+#    check: false
+#    timeout: 4000

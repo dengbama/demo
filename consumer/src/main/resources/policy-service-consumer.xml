@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       	http://www.springframework.org/schema/beans/spring-beans.xsd
+       	http://code.alibabatech.com/schema/dubbo
+       	http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+       	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="policy-service-consumer" />
+
+	<!-- 关闭所有服务的启动时检查：(没有提供者时报错) -->
+	<dubbo:consumer check="false" />
+
+
+	<!-- uat服务注册zookeeper地址 -->
+<!--	 <dubbo:registry protocol="zookeeper" address="192.168.100.33:2181,192.168.100.34:2181,192.168.100.35:2181,10.255.100.146:2181" client="zkclient" />-->
+	<!--     <dubbo:registry protocol="zookeeper" address="192.168.100.33:2181" client="zkclient" /> -->
+	<!--<dubbo:registry protocol="zookeeper" address="${backstagekMS.zk.address}" client="zkclient"/>-->
+	<dubbo:registry protocol="zookeeper" address="${backstagekMS.zk.address}" client="zkclient"/>
+	<!--<dubbo:protocol name="dubbo" port="20881" /> -->
+
+	<!-- 寺库保单查询接口 -->
+	<dubbo:reference id="policyQuerySimpleService"
+					 interface="com.sinosig.insurance.service.web.PolicyQuerySimpleService" />
+
+	<!-- 寺库保单查询收付接口 -->
+	<dubbo:reference id="queryPaymentPolicyInfoServer"
+					 interface="com.sinosig.payment.application.service.QueryPaymentPolicyInfoServer" />
+
+	<!-- 邮件发送  生成远程服务代理 -->
+	<!-- <dubbo:reference id="addEmailService" version="1.0.0" timeout="30000" interface="com.sinosig.email.service.AddEmailService" /> -->
+
+	<!-- 保单批量查询接口 -->
+	<dubbo:reference id="policyQueryListService"
+					 interface="com.sinosig.insurance.service.web.PolicyQueryListService" />
+	<!-- 保单明细查询接口 -->
+	<dubbo:reference id="policyQueryDetailService"
+					 interface="com.sinosig.insurance.service.web.PolicyQueryDetailService" />
+	<!-- 新核心接口  重庆那边的-->
+	<dubbo:reference id="policyRequestNewCoreService"
+					 interface="com.amarsoft.server.PolicyRequestService" timeout="6000"/>
+
+	<!-- 订单列表查询接口 -->
+	<dubbo:reference id="sOrderInfoService"
+					 interface="com.yurong.pcWeb.eportal.sOrder.service.ISOrderInfoService" timeout="60000" />
+
+	<!-- 催收系统 认证用户-->
+	<dubbo:reference id="confirmUserService"
+					 interface="com.amarsoft.cs.service.ConfirmUserService" />
+	<!-- 核心系统,查询订单状态-->
+	<dubbo:reference id="checkGWChange"
+					 interface="com.sinosoft.gw.CheckGWChange" timeout="60000"/>
+	<!--核心系统，查询保单  -->
+	<!-- 核心系统,查询订单状态-->
+	<dubbo:reference id="policyServiceOffline"
+					 interface="com.sinosoft.xb.PolicyService" timeout="60000"/>
+
+	<dubbo:reference id="statusChangeMsg"
+					 interface="com.sinosig.intoPieces.service.StatusChangeMsg" timeout="600000"/>
+
+	<dubbo:reference  id="policyInfoFacade" interface="com.sinosig.xinbao.api.service.PolicyInfoFacade" timeout="120000"/>
+	<!-- 去总线查询理赔代偿信息-->
+	<dubbo:reference  id="ICompensateInfoService" interface="com.sinosig.servicebus.claiminfo.service.ICompensateInfoService" timeout="30000"/>
+
+	<!-- 微信公众号服务 -->
+	<dubbo:reference  id="appService" interface="com.sinosig.xinbao.app.dubbo.service.AppService" timeout="120000"/>
+
+	<!-- 对接告警平台dubbo服务 -->
+	<dubbo:reference id="altInterfaceService" interface="com.sinosig.ygxb.alert.service.AltInterfaceService" />
+
+	<!--对接青藤系统-->
+	<dubbo:reference id="riskQueryDubboService" interface="com.gbicc.service.RiskQueryDubboService" />
+
+	<!--通过官网对接信保-->
+	<dubbo:reference id="amarsoftAdviceService" interface="com.yurong.pcWeb.amarsoftAdvice.service.AmarsoftAdviceService" timeout="240000"/>
+	<!--电子保单，电子保函查询  -->
+	<dubbo:reference id="ePolicyDubboService" interface="com.sinosig.servicebus.digitalbill.service.IEPolicyDubboService" timeout="240000"/>
+	<!--电子发票  -->
+	<dubbo:reference id="ePaymentDubboService" interface="com.sinosig.payment.application.dubbo.PaymentDubboService" timeout="240000"/>
+
+	<dubbo:reference id="iEpolicyGatewayService" interface="com.sinosig.servicebus.digitalbill.service.IEpolicyGatewayService" timeout="240000"/>
+
+	<!--直接对接信保-->
+	<dubbo:reference id="cimsGatewayService" interface="com.amarsoft.app.cims.gateway.CimsGatewayService" timeout="60000"  />
+	<!--对接进件，邮件发送服务  -->
+	<dubbo:reference id="orderInterfaceService" interface="com.sinosig.intoPieces.service.OrderInterfaceService" timeout="60000"  />
+	<!--退单-->
+	<dubbo:reference id="ProposalRefundService" interface="com.sinosoft.gw.ProposalRefundService" retries="0"/>
+
+	<!--保函保单查询  -->
+	<dubbo:reference id="policynoRefundService" interface="com.sinosoft.gw.PolicynoRefundService" timeout="60000" version="*"/>
+
+	<!--信用保接收反洗钱证件修改数据  -->
+	<dubbo:reference id="updateCustomerCardInfoService" interface="com.sinosig.creditInsurance.application.service.UpdateCustomerCardInfoService" timeout="60000"/>
+	<!--运营平台对接网关  -->
+	<dubbo:reference id="gateWayService" interface="com.sinosig.xb.gateway.common.service.GatewayCommonService" timeout="60000" />
+	<dubbo:reference id="altMergeService" interface="com.sinosig.ygxb.alert.service.AltMergeService" timeout="60000" />
+	<dubbo:reference id="cusOperateDubboService" interface="com.sinosig.xinbao.port.cusOperate.dubboService.CusOperateDubboService" timeout="60000" />
+	<dubbo:reference id="corEexternalService" interface="com.sinosoft.prpall.dubboService.CorEexternalService" timeout="60000" />
+
+	<!--报案-->
+	<dubbo:reference id="autoRegistService" interface="com.sinosoft.claim.service.AutoRegistService" retries="0" />
+	<!--理赔原因-->
+	<dubbo:reference id="claimPublicUtilService" interface="com.sinosoft.claim.service.ClaimPublicUtilService" retries="0" />
+</beans>

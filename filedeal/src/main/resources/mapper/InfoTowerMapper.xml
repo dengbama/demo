@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.mapper.InfoTowerMapper">
+
+<!--    <sql id="load">-->
+<!--        load data local infile #{filePath}-->
+<!--        into table #{table_name }-->
+<!--        LINES TERMINATED by #{line}-->
+<!--        IGNORE #{ignore} lines-->
+<!--        <foreach collection="list" open="(" close=")" item="str" separator=",">-->
+<!--            #{str}-->
+<!--        </foreach>-->
+<!--    </sql>-->
+
+<!--    <insert id="load" parameterType="java.util.Map">-->
+<!--        load data local infile #{filepath}-->
+<!--        into table #{tableName}-->
+<!--        FIELDS TERMINATED BY ','-->
+<!--        LINES TERMINATED by #{line}-->
+<!--        IGNORE 1 ROWS-->
+<!--        (tower_id,tower_code,lng,lat,line_name)-->
+<!--&lt;!&ndash;        (&ndash;&gt;-->
+<!--&lt;!&ndash;        <foreach collection="list" item="str" separator=",">&ndash;&gt;-->
+<!--&lt;!&ndash;            #{str}&ndash;&gt;-->
+<!--&lt;!&ndash;        </foreach>&ndash;&gt;-->
+<!--&lt;!&ndash;        )&ndash;&gt;-->
+
+<!--    </insert>-->
+
+<!--    <insert id="load">-->
+<!--        LOAD DATA LOCAL INFILE #{filePath} INTO TABLE ${tabelName}-->
+<!--            FIELDS TERMINATED BY ','-->
+<!--            ENCLOSED BY '\"'-->
+<!--            LINES TERMINATED BY #{line}-->
+<!--            IGNORE 1 LINES-->
+<!--            (@tower_id, @tower_code, @lng, @lat,-->
+<!--            @line_name) SET-->
+<!--            (tower_id = @tower_id, tower_code = @tower_code, lng = @lng, lat = @lat,-->
+<!--            line_name = @line_name)-->
+<!--    </insert>-->
+
+</mapper>

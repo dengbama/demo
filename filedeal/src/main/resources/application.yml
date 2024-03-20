@@ -1,0 +1,36 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/江苏预警?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+    password: root
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
+  rabbitmq:
+    addresses: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.deng.entity
+
+
+
+#dubbo:
+##  指定注册中心
+#  registry:
+#    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+#    check: false
+#  #  配置服务名称
+#  application:
+#    name: policy-service-consumer
+##    指定通信规则(协议，端口)
+#  protocol:
+#    name: dubbo
+#    port: 20883

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       	http://www.springframework.org/schema/beans/spring-beans.xsd
+       	http://code.alibabatech.com/schema/dubbo
+       	http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+       	http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- <dubbo:application name="policy-service-provider" /> -->
+ 	<!-- 给渝融官网提供服务 -->
+	<dubbo:service interface="com.yurong.backstage.policy.service.IQueryPolicyService"
+		ref="queryPolicyService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="queryPolicyService" class="com.yurong.backstage.policy.service.impl.QueryPolicyServiceImpl" />
+	
+	<!-- 中保协 网关 调用接口 -->
+	<dubbo:service interface="com.yurong.backstage.policy.service.IZbxQueryPolicyService"
+		ref="zbxPolicyService" retries="0" timeout="60000" version="1.0.0"/>       <!-- 和本地bean一样实现服务 -->
+	<bean id="zbxPolicyService" class="com.yurong.backstage.policy.service.impl.IZbxQueryPolicyServiceImpl" />
+
+    <!-- 中保协 网关 调用接口 -->
+    <dubbo:service interface="com.yurong.backstage.policy.service.IZbxQueryPolicyService"
+                   ref="zbxPolicyService" retries="0" timeout="60000" version="2.0.0"/>       <!-- 和本地bean一样实现服务 -->
+    <bean id="zbxPolicyService1" class="com.yurong.backstage.policy.service.impl.IZbxQueryPolicyServiceImpl" />
+	<!-- 新核心单单信息接口  dubbo -->
+	<dubbo:service interface="com.yurong.backstage.sorder.dubboService.PolicyNewCoreReturnService"
+		ref="policyNewCoreReturnService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="policyNewCoreReturnService" class="com.yurong.backstage.sorder.dubboService.impl.PolicyNewCoreReturnServiceImpl" />
+	<!-- 对接RMS系统接口 dubbo -->
+	<dubbo:service interface="com.yurong.backstage.sorder.dubboService.RmsConectionBackstageService"
+		ref="rmsConectionBackstageService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="rmsConectionBackstageService" class="com.yurong.backstage.sorder.dubboService.impl.RmsConectionBackstageServiceImpl" />
+	<!-- 给渝融官网提供保单列表服务 -->
+	<dubbo:service interface="com.yurong.backstage.policyPrint.service.IBatchQueryPolicyListService"
+		ref="batchQueryPolicyListSer" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<!-- <dubbo:service interface="com.yurong.backstage.policyPrint.service.IBatchQueryPolicyListService"
+		ref="" retries="0" timeout="60000" /> -->		
+	<!-- 给官网提供核心订单状态查询服务 -->
+	<dubbo:service interface="com.yurong.backstage.orderchange.service.IChangeOrderStatusService"
+		ref="iChangeOrderStatusService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="iChangeOrderStatusService" class="com.yurong.backstage.orderchange.service.serviceimpl.IChangeOrderStatusServiceImpl" />
+	<!-- 给核心提供订单状态查询服务 -->
+	<dubbo:service interface="com.yurong.backstage.orderchange.service.IBusinessDubboService"
+		ref="iChangeOrderDubboService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="iChangeOrderDubboService" class="com.yurong.backstage.orderchange.service.serviceimpl.IChangeOrderDubboServiceImpl" />
+	<!-- 签署情况查询接口 -->
+	<dubbo:service interface="com.yurong.backstage.confirmInsure.service.IConfirmDubboService"
+		ref="IConfirmDubboService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="IConfirmDubboService" class="com.yurong.backstage.confirmInsure.service.impl.ConfirmDubboServiceImpl" />
+	<!-- 给微信公众号提供理赔信息查询接口 -->
+	<dubbo:service interface="com.yurong.backstage.claim.service.IQueryClaimService"
+		ref="QueryClaimService" retries="0" timeout="60000" />       <!-- 和本地bean一样实现服务 -->
+	<bean id="QueryClaimService" class="com.yurong.backstage.claim.service.impl.QueryClaimServiceImpl" />
+
+	<!-- 线上化需求提供给app调用的同步预约信息及查询面审结果接口-->
+	<dubbo:service interface="com.yurong.backstage.appointment.service.AppointmentService"
+				   ref="appointmentService" retries="0" timeout="60000" />
+	<bean id="appointmentService" class="com.yurong.backstage.appointment.service.impl.AppointmentImpl" />
+	
+	<dubbo:service interface="com.yurong.backstage.sf.dubboService.SfCallBackService"  ref="iSfCallBackService"  timeout="60000"  />
+	<dubbo:service interface="com.yurong.backstage.invoice.dubboService.InvoiceQueryService"  ref="invoiceQuery"  timeout="60000"  />
+	<bean id="iSfCallBackService" class="com.yurong.backstage.sf.dubboService.impl.SfCallBackServiceImpl" />
+	<bean id="invoiceQuery" class="com.yurong.backstage.invoice.dubboService.impl.InvoiceQueryServiceImpl" />
+
+	<dubbo:service interface="com.yurong.backstage.dubboService.service.CommonDubboService"  ref="iCommonDubboService" retries="0" timeout="60000" />
+	<bean id="iCommonDubboService" class="com.yurong.backstage.dubboService.service.impl.CommonDubboServiceImpl" />
+	<bean id="iEmploymentService" class="com.yurong.backstage.employment.service.impl.EmploymentServiceImpl" />
+</beans>

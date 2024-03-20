@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.component.scan",
+      "type": "java.lang.String",
+      "description": "Description for spring.component.scan."
+  }
+] }
